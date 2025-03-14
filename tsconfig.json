@@ -1,0 +1,18 @@
+{
+  //this needs to be done then make the package global and then go onto the stand alone project
+  "compilerOptions": {
+    "target": "es2016",                                  /* Set the JavaScript language version for emitted JavaScript and include compatible library declarations. */
+    "module": "es6",                                /* Specify what module code is generated. */
+    "forceConsistentCasingInFileNames": true,            /* Ensure that casing is correct in imports. */
+    "strict": true,                                      /* Enable all strict type-checking options. */
+    "typeRoots": ["./lib/types", "./node_modules/@types"],
+    "jsx":"react-jsx",
+    "esModuleInterop": true,
+    "moduleResolution": "node",
+    "declaration": true,
+    "outDir": "build",
+    "lib": ["ES6","DOM","ESNext"]
+  },
+  "include": ["lib/"]
+}
+        

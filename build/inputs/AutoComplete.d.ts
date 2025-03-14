@@ -1,0 +1,33 @@
+import { CSSProperties } from "react";
+import { InputLabelProps, InputStyle } from "./Input";
+import { CancelTokenSource } from "axios";
+import { IconDefinition } from "@fortawesome/fontawesome-svg-core";
+import { DisabledOverlayStyle } from "../overlays/DisabledOverlay";
+type AutoCompleteStyle<Icon extends IconDefinition | undefined = undefined> = {
+    mainWrapper?: CSSProperties;
+    optionWrapper?: CSSProperties;
+    option?: CSSProperties;
+    loadingText?: CSSProperties;
+    noItemText?: CSSProperties;
+    inputStyle: InputStyle<Icon>;
+    onHoverOption?: CSSProperties;
+    disableStyle?: DisabledOverlayStyle;
+    removeIcon?: CSSProperties;
+};
+type AutoCompleteProps<Icon extends IconDefinition | undefined = undefined> = {
+    pattern: string;
+    label: InputLabelProps<"label" | "placeholder">;
+    search: (searchTerm: string, cancelToken: CancelTokenSource) => Promise<JsonObject[]>;
+    onSelect: (data: JsonObject | null) => void;
+    selectedPattern?: string;
+    loadingText?: string;
+    searchDelay?: number;
+    noItemsText?: string;
+    disabled?: boolean;
+    icon?: Icon;
+    startValue?: JsonObject[];
+    style?: AutoCompleteStyle;
+    removeIcon?: IconDefinition;
+};
+declare const AutoComplete: <Icon extends IconDefinition | undefined = undefined>({ label, search, pattern, onSelect, startValue, loadingText, noItemsText, style, disabled, selectedPattern, removeIcon }: AutoCompleteProps<Icon>) => import("react/jsx-runtime").JSX.Element;
+export default AutoComplete;
