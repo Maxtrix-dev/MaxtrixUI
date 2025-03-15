@@ -28,6 +28,8 @@ type ButtonProps<Icon extends IconDefinition | undefined = undefined, Text exten
     onClick: () => void;
     style?: ButtonStyle<Icon, Text>;
     disabled?: boolean;
-});
-declare const Button: <Icon extends IconDefinition | undefined = undefined, Text_1 extends string | undefined = undefined>({ text, icon, style, disabled, onClick }: ButtonProps<Icon, Text_1>) => import("react/jsx-runtime").JSX.Element;
+}) & (Text extends string ? (Icon extends IconDefinition ? {
+    reverse?: boolean;
+} : {}) : {});
+declare const Button: <Icon extends IconDefinition | undefined = undefined, Text_1 extends string | undefined = undefined>(props: ButtonProps<Icon, Text_1>) => import("react/jsx-runtime").JSX.Element;
 export default Button;
