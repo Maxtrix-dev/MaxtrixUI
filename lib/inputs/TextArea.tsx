@@ -43,7 +43,8 @@ const styles:Style={
         marginBottom:"0.5em",
         border:"solid 1px lightgray",
         borderRadius:"0.25rem",
-        boxShadow:"0px 0px 5px rgba(0, 0, 0, 0.1)"
+        boxShadow:"0px 0px 5px rgba(0, 0, 0, 0.1)",
+        minHeight:"3.5rem"
     },
     textArea:{
         padding:"0.45rem 0.75rem",
