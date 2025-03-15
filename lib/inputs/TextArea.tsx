@@ -1,8 +1,8 @@
 import React, { CSSProperties, ReactNode, useEffect, useRef, useState } from "react";
 
 type TextAreaStyle<Label extends LabelProps|undefined=undefined>={
-    wrapper:CSSProperties,
-    textArea:CSSProperties
+    wrapper?:CSSProperties,
+    textArea?:CSSProperties
 }&(Label extends undefined?{}:{label?:CSSProperties,labelGap?:string
 })
 
@@ -30,12 +30,12 @@ const styles:Style={
         padding:"0px",
         fontSize: "0.9rem", 
         lineHeight:"0.9rem",
-        //color:"lightgray",
         color: "#5f676e",
         border:"none",
         userSelect:"none",
         WebkitUserSelect:"none",
         msUserSelect:"none",
+        zIndex:2
     },
     wrapper:{
         display:"flex",
@@ -44,15 +44,18 @@ const styles:Style={
         border:"solid 1px lightgray",
         borderRadius:"0.25rem",
         boxShadow:"0px 0px 5px rgba(0, 0, 0, 0.1)",
-        minHeight:"3.5rem"
+
     },
     textArea:{
+        position:"relative",
         padding:"0.45rem 0.75rem",
         width:"100%",
         height:"100%",
         border:"none",
         borderRadius:"0.25rem",
-        minHeight:"3.5rem"
+        minHeight:"3.5rem",
+        boxSizing:"border-box",
+        minWidth:"100%",
     }
 }
 
@@ -63,7 +66,7 @@ const TextArea=<Label extends LabelProps|undefined=undefined>({onChange,onEmptyU
         const resolvedKey = (localStyleKey ?? key) as keyof typeof styles & string;
         // Check if the key exists in the styles and style objects
         const baseStyle = styles[resolvedKey] || {};
-        const customStyle = style && key in style ? style[key as keyof typeof style] : {};
+        const customStyle = (style?.[key as keyof typeof style] ?? {}) as CSSProperties;
         return { ...baseStyle, ...customStyle };
     }
     useEffect(()=>{

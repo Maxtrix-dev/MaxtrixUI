@@ -1,7 +1,7 @@
 import { CSSProperties } from "react";
 type TextAreaStyle<Label extends LabelProps | undefined = undefined> = {
-    wrapper: CSSProperties;
-    textArea: CSSProperties;
+    wrapper?: CSSProperties;
+    textArea?: CSSProperties;
 } & (Label extends undefined ? {} : {
     label?: CSSProperties;
     labelGap?: string;

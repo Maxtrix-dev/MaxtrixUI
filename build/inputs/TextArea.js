@@ -9,12 +9,12 @@ const styles = {
         padding: "0px",
         fontSize: "0.9rem",
         lineHeight: "0.9rem",
-        //color:"lightgray",
         color: "#5f676e",
         border: "none",
         userSelect: "none",
         WebkitUserSelect: "none",
         msUserSelect: "none",
+        zIndex: 2
     },
     wrapper: {
         display: "flex",
@@ -23,15 +23,17 @@ const styles = {
         border: "solid 1px lightgray",
         borderRadius: "0.25rem",
         boxShadow: "0px 0px 5px rgba(0, 0, 0, 0.1)",
-        minHeight: "3.5rem"
     },
     textArea: {
+        position: "relative",
         padding: "0.45rem 0.75rem",
         width: "100%",
         height: "100%",
         border: "none",
         borderRadius: "0.25rem",
-        minHeight: "3.5rem"
+        minHeight: "3.5rem",
+        boxSizing: "border-box",
+        minWidth: "100%",
     }
 };
 const TextArea = ({ onChange, onEmptyUseStartValue = false, startValue, label, style }) => {
@@ -39,10 +41,11 @@ const TextArea = ({ onChange, onEmptyUseStartValue = false, startValue, label, s
     const changed = useRef(false);
     const [value, setValue] = useState(startValue ? startValue.toString() : "");
     const getStyle = (key, localStyleKey) => {
+        var _a;
         const resolvedKey = (localStyleKey !== null && localStyleKey !== void 0 ? localStyleKey : key);
         // Check if the key exists in the styles and style objects
         const baseStyle = styles[resolvedKey] || {};
-        const customStyle = style && key in style ? style[key] : {};
+        const customStyle = ((_a = style === null || style === void 0 ? void 0 : style[key]) !== null && _a !== void 0 ? _a : {});
         return Object.assign(Object.assign({}, baseStyle), customStyle);
     };
     useEffect(() => {
