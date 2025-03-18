@@ -29,11 +29,11 @@ type SelectStyle<Searchable extends boolean = false,SearchIcon extends IconDefin
 &(Label extends undefined?{}:{label?:CSSProperties,labelGap?:string})
 
 
-type SelectProps<Searchable extends boolean = false,SearchIcon extends IconDefinition|undefined=undefined,Multiselect extends boolean=false,Label extends string|undefined=undefined> = {
+type SelectProps<T extends Record<string,any>,Searchable extends boolean = false,SearchIcon extends IconDefinition|undefined=undefined,Multiselect extends boolean=false,Label extends string|undefined=undefined> = {
     label?: Label;
     pattern:string;
     selectedPattern?:string;
-    options: JsonObject[];
+    options: T[];
     disabled?:boolean;
     placeholderText?:string;
     style?: SelectStyle<Searchable,SearchIcon,Multiselect,Label>
@@ -45,12 +45,12 @@ type SelectProps<Searchable extends boolean = false,SearchIcon extends IconDefin
 &(Multiselect extends true?{
         onEmptyUseStartValues?:boolean
         multiselect?:Multiselect,
-        onSelect: (value: JsonObject[]) => void;
+        onSelect: (value: T[]) => void;
         startIndex?:number[];
     }
     :{
         multiselect?:Multiselect,
-        onSelect: (value: JsonObject) => void;
+        onSelect: (value: T) => void;
         startIndex?:number
     }
     )
@@ -163,7 +163,7 @@ const searchBarStyle:InputStyle<IconDefinition>={
     }  
 };
 
-const Select=<Searchable extends boolean = false,SearchIcon extends IconDefinition|undefined=undefined,Multiselect extends boolean=false,Label extends string|undefined=undefined>(props:SelectProps<Searchable,SearchIcon,Multiselect,Label>)=>{
+const Select=<T extends Record<string,any>,Searchable extends boolean = false,SearchIcon extends IconDefinition|undefined=undefined,Multiselect extends boolean=false,Label extends string|undefined=undefined>(props:SelectProps<T,Searchable,SearchIcon,Multiselect,Label>)=>{
     const {searchable,startIndex,label,placeholderText,multiselect,style,onSelect,options,disabled,pattern,selectedPattern}=props;
     let searchBarIcon:IconDefinition|undefined;
     let searchBarLabel:InputLabelProps<"label"|"placeholder">={placement:"placeholder",text:"Vyhledat"};

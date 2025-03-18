@@ -24,11 +24,11 @@ type SelectStyle<Searchable extends boolean = false, SearchIcon extends IconDefi
     label?: CSSProperties;
     labelGap?: string;
 });
-type SelectProps<Searchable extends boolean = false, SearchIcon extends IconDefinition | undefined = undefined, Multiselect extends boolean = false, Label extends string | undefined = undefined> = {
+type SelectProps<T extends Record<string, any>, Searchable extends boolean = false, SearchIcon extends IconDefinition | undefined = undefined, Multiselect extends boolean = false, Label extends string | undefined = undefined> = {
     label?: Label;
     pattern: string;
     selectedPattern?: string;
-    options: JsonObject[];
+    options: T[];
     disabled?: boolean;
     placeholderText?: string;
     style?: SelectStyle<Searchable, SearchIcon, Multiselect, Label>;
@@ -41,12 +41,12 @@ type SelectProps<Searchable extends boolean = false, SearchIcon extends IconDefi
 }) & (Multiselect extends true ? {
     onEmptyUseStartValues?: boolean;
     multiselect?: Multiselect;
-    onSelect: (value: JsonObject[]) => void;
+    onSelect: (value: T[]) => void;
     startIndex?: number[];
 } : {
     multiselect?: Multiselect;
-    onSelect: (value: JsonObject) => void;
+    onSelect: (value: T) => void;
     startIndex?: number;
 });
-declare const Select: <Searchable extends boolean = false, SearchIcon extends IconDefinition | undefined = undefined, Multiselect extends boolean = false, Label extends string | undefined = undefined>(props: SelectProps<Searchable, SearchIcon, Multiselect, Label>) => import("react/jsx-runtime").JSX.Element;
+declare const Select: <T extends Record<string, any>, Searchable extends boolean = false, SearchIcon extends IconDefinition | undefined = undefined, Multiselect extends boolean = false, Label extends string | undefined = undefined>(props: SelectProps<T, Searchable, SearchIcon, Multiselect, Label>) => import("react/jsx-runtime").JSX.Element;
 export default Select;
