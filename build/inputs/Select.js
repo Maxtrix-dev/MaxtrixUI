@@ -156,6 +156,11 @@ const Select = (props) => {
             setSelectedOptions([index]);
         }
     };
+    useEffect(() => {
+        if (startIndex != null && startIndex != undefined) {
+            setSelectedOptions(startIndex != undefined && startIndex != null ? Array.isArray(startIndex) ? startIndex : [startIndex] : []);
+        }
+    }, [startIndex]);
     //dodělat handling když vybíram věci hned se to vypne což je bs
     const handleOutsideClick = (event) => {
         if (elementRef.current && !elementRef.current.contains(event.target)) {

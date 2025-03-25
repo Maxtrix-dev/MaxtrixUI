@@ -198,10 +198,10 @@ const Select=<T extends Record<string,any>,Searchable extends boolean = false,Se
 
     const onHover=(e:React.MouseEvent<HTMLDivElement>)=>{
             Object.assign(e.currentTarget.style,{...styles.option,...getStyle("option"),...getStyle("onHoverOption")})
-        }
-        const onLeave=(e:React.MouseEvent<HTMLDivElement>)=>{
-            Object.assign(e.currentTarget.style,{...styles.option,...getStyle("option")})
-        }
+    }
+    const onLeave=(e:React.MouseEvent<HTMLDivElement>)=>{
+        Object.assign(e.currentTarget.style,{...styles.option,...getStyle("option")})
+    }
     
 
     const makeSelect=(index:number)=>{
@@ -216,6 +216,11 @@ const Select=<T extends Record<string,any>,Searchable extends boolean = false,Se
             setSelectedOptions([index]);
         }
     }
+    useEffect(()=>{
+        if(startIndex!=null&&startIndex!=undefined){
+            setSelectedOptions(startIndex!=undefined&&startIndex!=null?Array.isArray(startIndex)?startIndex:[startIndex as number]:[]);
+        }
+    },[startIndex])
     //dodělat handling když vybíram věci hned se to vypne což je bs
     const handleOutsideClick = (event: MouseEvent) => {
         if (elementRef.current && !elementRef.current.contains(event.target as Node)) {
