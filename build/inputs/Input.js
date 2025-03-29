@@ -2,7 +2,7 @@ import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
 import { useEffect, useRef, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 ;
-const Input = ({ label, disabled, style, icon, type, onChange, startValue, onEmptyUseStartValue }) => {
+const Input = ({ label, disabled, style, icon, type, onChange, startValue, onEmptyUseStartValue, name }) => {
     //Tady je potřeba dodělat tu animaci
     var _a;
     const styles = {
@@ -106,7 +106,7 @@ const Input = ({ label, disabled, style, icon, type, onChange, startValue, onEmp
             inputRef.current.focus();
         }
     };
-    return _jsxs("div", { style: getStyle("wrapper"), children: [_jsx("input", { ref: inputRef, value: value, placeholder: label && (label === null || label === void 0 ? void 0 : label.placement) == "placeholder" ? label === null || label === void 0 ? void 0 : label.text : undefined, onBlur: HandleBlur, onFocus: HandleFocus, disabled: disabled, style: Object.assign(Object.assign({}, getStyle("input")), (label && (label === null || label === void 0 ? void 0 : label.placement) == "label" ? { paddingTop: (_a = style === null || style === void 0 ? void 0 : style.labelGap) !== null && _a !== void 0 ? _a : "1.4rem" } : {})), onChange: (e) => setValue(e.target.value), type: type }), label && (label === null || label === void 0 ? void 0 : label.placement) == "label"
+    return _jsxs("div", { style: getStyle("wrapper"), children: [_jsx("input", { ref: inputRef, value: value, name: name, placeholder: label && (label === null || label === void 0 ? void 0 : label.placement) == "placeholder" ? label === null || label === void 0 ? void 0 : label.text : undefined, onBlur: HandleBlur, onFocus: HandleFocus, disabled: disabled, style: Object.assign(Object.assign({}, getStyle("input")), (label && (label === null || label === void 0 ? void 0 : label.placement) == "label" ? { paddingTop: (_a = style === null || style === void 0 ? void 0 : style.labelGap) !== null && _a !== void 0 ? _a : "1.4rem" } : {})), onChange: (e) => setValue(e.target.value), type: type }), label && (label === null || label === void 0 ? void 0 : label.placement) == "label"
                 ? _jsx("span", { onClick: labelClick, style: Object.assign(Object.assign({}, getStyle("label")), (!labelUp ? getStyle("labelCentered") : {})), children: label.text })
                 : null, icon != null
                 ? _jsx(FontAwesomeIcon, { icon: icon, style: getStyle("icon") })

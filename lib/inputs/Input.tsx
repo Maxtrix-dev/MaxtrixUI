@@ -25,6 +25,7 @@ interface InputProps<
     label?:Label,
     onChange:(value:(Type extends "number"?number:string))=>void
     startValue?:(Type extends "number"?number|null:string|null),
+    name?:string,
     onEmptyUseStartValue?:boolean,
     disabled?:boolean,
     style?:InputStyle<Icon,Label,LabelPlacement>,
@@ -32,7 +33,7 @@ interface InputProps<
     type?:Type
 };
 
-const Input=<Type extends "text"|"number" = "text",Icon extends IconDefinition |undefined=undefined,Label extends InputLabelProps<"label"|"placeholder">|undefined=undefined,LabelPlacement extends "label"|"placeholder"=Label extends InputLabelProps<infer P>?P:"label">({label,disabled,style,icon,type,onChange,startValue,onEmptyUseStartValue}:InputProps<Type,Icon,Label,LabelPlacement>)=>{
+const Input=<Type extends "text"|"number" = "text",Icon extends IconDefinition |undefined=undefined,Label extends InputLabelProps<"label"|"placeholder">|undefined=undefined,LabelPlacement extends "label"|"placeholder"=Label extends InputLabelProps<infer P>?P:"label">({label,disabled,style,icon,type,onChange,startValue,onEmptyUseStartValue,name}:InputProps<Type,Icon,Label,LabelPlacement>)=>{
 
     //Tady je potřeba dodělat tu animaci
 
@@ -140,7 +141,7 @@ const Input=<Type extends "text"|"number" = "text",Icon extends IconDefinition |
     }
 
     return <div style={getStyle("wrapper")}>
-        <input ref={inputRef} value={value} placeholder={label&&label?.placement=="placeholder"?label?.text:undefined} onBlur={HandleBlur} onFocus={HandleFocus} disabled={disabled} style={{...getStyle("input"),...(label&&label?.placement=="label"?{paddingTop:(style as {labelGap?:string})?.labelGap??"1.4rem"}:{})}} onChange={(e)=>setValue(e.target.value)} type={type} />
+        <input ref={inputRef} value={value} name={name} placeholder={label&&label?.placement=="placeholder"?label?.text:undefined} onBlur={HandleBlur} onFocus={HandleFocus} disabled={disabled} style={{...getStyle("input"),...(label&&label?.placement=="label"?{paddingTop:(style as {labelGap?:string})?.labelGap??"1.4rem"}:{})}} onChange={(e)=>setValue(e.target.value)} type={type} />
         {label&&label?.placement=="label"
             ?<span onClick={labelClick} style={{...getStyle("label" as CustomStyleKey<Icon,Label,LabelPlacement>),...(!labelUp?getStyle("labelCentered" as CustomStyleKey<Icon,Label,LabelPlacement>):{})}}>{label.text}</span>
             :null
