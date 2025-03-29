@@ -90,8 +90,7 @@ const Button=<Icon extends IconDefinition|undefined=undefined,Text extends strin
     const onLeave=(e:React.MouseEvent<HTMLDivElement>)=>{
         setHovered(false);
     }
-    return <DisabledOverlay disabled={disabled}> 
-        <div style={{...getStyle("button"),...(hovered?getStyle("onHover"):{})}} onMouseEnter={disabled?undefined:onHover} onMouseLeave={disabled?undefined:onLeave} onClick={disabled?undefined:onClick}>
+    return <div style={{...getStyle("button"),...(hovered?getStyle("onHover"):{})}} onMouseEnter={disabled?undefined:onHover} onMouseLeave={disabled?undefined:onLeave} onClick={disabled?undefined:onClick}>
             {reverse
             ?<>
                 {text
@@ -115,7 +114,6 @@ const Button=<Icon extends IconDefinition|undefined=undefined,Text extends strin
             </>
             }
         </div>
-    </DisabledOverlay>
     ;
 }
 

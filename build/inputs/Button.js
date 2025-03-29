@@ -1,7 +1,6 @@
 import { jsx as _jsx, Fragment as _Fragment, jsxs as _jsxs } from "react/jsx-runtime";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react";
-import DisabledOverlay from "../overlays/DisabledOverlay";
 const paddingHorizontal = "1em";
 const paddingVertical = "0.3em";
 const styles = {
@@ -40,16 +39,16 @@ const Button = (props) => {
     const onLeave = (e) => {
         setHovered(false);
     };
-    return _jsx(DisabledOverlay, { disabled: disabled, children: _jsx("div", { style: Object.assign(Object.assign({}, getStyle("button")), (hovered ? getStyle("onHover") : {})), onMouseEnter: disabled ? undefined : onHover, onMouseLeave: disabled ? undefined : onLeave, onClick: disabled ? undefined : onClick, children: reverse
-                ? _jsxs(_Fragment, { children: [text
-                            ? _jsx("span", { style: Object.assign({}, getStyle("text")), children: text })
-                            : null, icon
-                            ? _jsx(FontAwesomeIcon, { icon: icon, style: Object.assign(Object.assign({}, getStyle("icon")), (icon ? { marginLeft: "0.5em" } : {})) })
-                            : null] })
-                : _jsxs(_Fragment, { children: [icon
-                            ? _jsx(FontAwesomeIcon, { icon: icon, style: getStyle("icon") })
-                            : null, text
-                            ? _jsx("span", { style: Object.assign(Object.assign({}, getStyle("text")), (icon ? { marginLeft: "0.5em" } : {})), children: text })
-                            : null] }) }) });
+    return _jsx("div", { style: Object.assign(Object.assign({}, getStyle("button")), (hovered ? getStyle("onHover") : {})), onMouseEnter: disabled ? undefined : onHover, onMouseLeave: disabled ? undefined : onLeave, onClick: disabled ? undefined : onClick, children: reverse
+            ? _jsxs(_Fragment, { children: [text
+                        ? _jsx("span", { style: Object.assign({}, getStyle("text")), children: text })
+                        : null, icon
+                        ? _jsx(FontAwesomeIcon, { icon: icon, style: Object.assign(Object.assign({}, getStyle("icon")), (icon ? { marginLeft: "0.5em" } : {})) })
+                        : null] })
+            : _jsxs(_Fragment, { children: [icon
+                        ? _jsx(FontAwesomeIcon, { icon: icon, style: getStyle("icon") })
+                        : null, text
+                        ? _jsx("span", { style: Object.assign(Object.assign({}, getStyle("text")), (icon ? { marginLeft: "0.5em" } : {})), children: text })
+                        : null] }) });
 };
 export default Button;
