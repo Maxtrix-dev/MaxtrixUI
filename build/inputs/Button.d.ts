@@ -1,6 +1,6 @@
 import { IconDefinition } from "@fortawesome/fontawesome-svg-core";
 import { CSSProperties } from "react";
-type ButtonStyle<Icon extends IconDefinition | undefined = undefined, Text extends string | undefined = undefined> = {
+export type ButtonStyle<Icon extends IconDefinition | undefined = undefined, Text extends string | undefined = undefined> = {
     button?: CSSProperties;
     onHover?: CSSProperties;
 } & (Icon extends undefined ? {} : {

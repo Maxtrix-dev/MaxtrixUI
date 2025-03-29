@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { CSSProperties, useState } from "react";
 import DisabledOverlay from "../overlays/DisabledOverlay";
 
-type ButtonStyle<Icon extends IconDefinition | undefined=undefined,Text extends string | undefined=undefined>={
+export type ButtonStyle<Icon extends IconDefinition | undefined=undefined,Text extends string | undefined=undefined>={
     button?:CSSProperties
     onHover?:CSSProperties
 }&(Icon extends undefined

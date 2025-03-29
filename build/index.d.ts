@@ -1,4 +1,5 @@
 export { default as Button } from "./inputs/Button";
+export { default as ButtonStyle } from "./inputs/Button";
 export { default as Select } from "./inputs/Select";
 export { default as Input } from "./inputs/Input";
 export { default as AutoComplete } from "./inputs/AutoComplete";
