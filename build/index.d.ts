@@ -2,6 +2,7 @@ export { default as Button } from "./inputs/Button";
 export type { ButtonStyle } from "./inputs/Button";
 export { default as Select } from "./inputs/Select";
 export { default as Input } from "./inputs/Input";
+export type { InputStyle } from "./inputs/Input";
 export { default as AutoComplete } from "./inputs/AutoComplete";
 export { default as TextArea } from "./inputs/TextArea";
 export { default as Toggle } from "./inputs/Toggle";
