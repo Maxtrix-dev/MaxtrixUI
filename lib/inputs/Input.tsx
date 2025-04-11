@@ -1,4 +1,4 @@
-import React, { CSSProperties, useEffect, useRef, useState } from "react";
+import React, { CSSProperties, InputHTMLAttributes, useEffect, useRef, useState } from "react";
 import {faSearch, IconDefinition} from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import DisabledOverlay, { DisabledOverlayStyle } from "../overlays/DisabledOverlay";
@@ -17,11 +17,15 @@ export type InputStyle<Icon extends IconDefinition | undefined,Label extends Inp
 
 type CustomStyleKey<Icon extends IconDefinition | undefined,Label extends InputLabelProps<"label"|"placeholder">|undefined=undefined,LabelPlacement extends "label"|"placeholder"=Label extends InputLabelProps<infer P>?P:"label">= keyof InputStyle<Icon,Label,LabelPlacement>;
 
+type DataProps={
+    [key in `data-${string}`]?: string|boolean;
+}
+
 interface InputProps<
         Type extends "text"|"number" = "text",
         Icon extends IconDefinition | undefined=undefined,
         Label extends InputLabelProps<"label"|"placeholder">|undefined=undefined,
-        LabelPlacement extends "label"|"placeholder"=Label extends InputLabelProps<infer P>?P:"label"> {
+        LabelPlacement extends "label"|"placeholder"=Label extends InputLabelProps<infer P>?P:"label"> extends DataProps{
     label?:Label,
     onChange:(value:(Type extends "number"?number:string))=>void
     startValue?:(Type extends "number"?number|null:string|null),
@@ -33,7 +37,7 @@ interface InputProps<
     type?:Type
 };
 
-const Input=<Type extends "text"|"number" = "text",Icon extends IconDefinition |undefined=undefined,Label extends InputLabelProps<"label"|"placeholder">|undefined=undefined,LabelPlacement extends "label"|"placeholder"=Label extends InputLabelProps<infer P>?P:"label">({label,disabled,style,icon,type,onChange,startValue,onEmptyUseStartValue,name}:InputProps<Type,Icon,Label,LabelPlacement>)=>{
+const Input=<Type extends "text"|"number" = "text",Icon extends IconDefinition |undefined=undefined,Label extends InputLabelProps<"label"|"placeholder">|undefined=undefined,LabelPlacement extends "label"|"placeholder"=Label extends InputLabelProps<infer P>?P:"label">({label,disabled,style,icon,type,onChange,startValue,onEmptyUseStartValue,name,...rest}:InputProps<Type,Icon,Label,LabelPlacement>)=>{
 
     //Tady je potřeba dodělat tu animaci
 
@@ -141,7 +145,7 @@ const Input=<Type extends "text"|"number" = "text",Icon extends IconDefinition |
     }
 
     return <div style={getStyle("wrapper")}>
-        <input ref={inputRef} value={value} name={name} placeholder={label&&label?.placement=="placeholder"?label?.text:undefined} onBlur={HandleBlur} onFocus={HandleFocus} disabled={disabled} style={{...getStyle("input"),...(label&&label?.placement=="label"?{paddingTop:(style as {labelGap?:string})?.labelGap??"1.4rem"}:{})}} onChange={(e)=>setValue(e.target.value)} type={type} />
+        <input ref={inputRef} value={value} name={name} placeholder={label&&label?.placement=="placeholder"?label?.text:undefined} onBlur={HandleBlur} onFocus={HandleFocus} disabled={disabled} style={{...getStyle("input"),...(label&&label?.placement=="label"?{paddingTop:(style as {labelGap?:string})?.labelGap??"1.4rem"}:{})}} onChange={(e)=>setValue(e.target.value)} type={type} {...rest} />
         {label&&label?.placement=="label"
             ?<span onClick={labelClick} style={{...getStyle("label" as CustomStyleKey<Icon,Label,LabelPlacement>),...(!labelUp?getStyle("labelCentered" as CustomStyleKey<Icon,Label,LabelPlacement>):{})}}>{label.text}</span>
             :null
