@@ -20,7 +20,7 @@ export type InputStyle<Icon extends IconDefinition | undefined, Label extends In
 type DataProps = {
     [key in `data-${string}`]?: string | boolean;
 };
-interface InputProps<Type extends "text" | "number" = "text", Icon extends IconDefinition | undefined = undefined, Label extends InputLabelProps<"label" | "placeholder"> | undefined = undefined, LabelPlacement extends "label" | "placeholder" = Label extends InputLabelProps<infer P> ? P : "label"> extends DataProps {
+export interface InputProps<Type extends "text" | "number" = "text", Icon extends IconDefinition | undefined = undefined, Label extends InputLabelProps<"label" | "placeholder"> | undefined = undefined, LabelPlacement extends "label" | "placeholder" = Label extends InputLabelProps<infer P> ? P : "label"> extends DataProps {
     label?: Label;
     onChange: (value: (Type extends "number" ? number : string)) => void;
     startValue?: (Type extends "number" ? number | null : string | null);

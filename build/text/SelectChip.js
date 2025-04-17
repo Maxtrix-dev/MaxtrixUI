@@ -23,8 +23,17 @@ const styles = {
     },
     icon: {
         color: "red",
+    },
+    button: {
         marginLeft: "0.5em",
         cursor: "pointer",
+        display: "inline-flex",
+        alignItems: "center",
+        justifyContent: "center",
+        lineHeight: 0,
+        background: "transparent",
+        border: "none",
+        padding: "1px"
     }
 };
 const SelectChip = ({ pattern, data, onRemove, icon, style }) => {
@@ -33,10 +42,17 @@ const SelectChip = ({ pattern, data, onRemove, icon, style }) => {
         var _a;
         return Object.assign(Object.assign({}, styles[localStyleKey !== null && localStyleKey !== void 0 ? localStyleKey : key]), ((_a = style === null || style === void 0 ? void 0 : style[key]) !== null && _a !== void 0 ? _a : null));
     };
-    const OnKeyDown = (event) => {
-        if (event.key === "Enter") {
+    const OnKeyDown = (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            // take focus away so we don’t hide it while it's still focused
+            e.currentTarget.blur();
             onRemove();
         }
+    };
+    const handleRemoveClick = (e) => {
+        e.currentTarget.blur();
+        onRemove();
     };
     //this will handle the replacing 
     const replaceFields = (pattern) => {
@@ -50,6 +66,6 @@ const SelectChip = ({ pattern, data, onRemove, icon, style }) => {
             }
         });
     };
-    return _jsxs("div", { style: getStyle("wrapper"), children: [_jsx("span", { style: getStyle("text"), children: replaceFields(pattern) }), _jsx(FontAwesomeIcon, { tabIndex: 0, onKeyDown: OnKeyDown, icon: icon != null ? icon : faClose, "data-chip-icon": true, style: getStyle("icon"), onClick: (e) => onRemove() })] });
+    return _jsxs("div", { style: getStyle("wrapper"), children: [_jsx("span", { style: getStyle("text"), children: replaceFields(pattern) }), _jsx("button", { "data-chip-icon": true, style: getStyle("button"), tabIndex: 0, onKeyDown: OnKeyDown, onClick: handleRemoveClick, children: _jsx(FontAwesomeIcon, { icon: icon != null ? icon : faClose, style: getStyle("icon") }) })] });
 };
 export default SelectChip;

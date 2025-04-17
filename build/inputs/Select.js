@@ -204,6 +204,7 @@ const Select = (props) => {
         }
     }, [selectedOptions]);
     const removeChip = (index) => {
+        wasChanged.current = true;
         setSelectedOptions((prevItems) => prevItems.filter(item => item != index));
     };
     const replaceFields = (index, pattern) => {

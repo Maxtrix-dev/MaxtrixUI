@@ -21,7 +21,7 @@ type DataProps={
     [key in `data-${string}`]?: string|boolean;
 }
 
-interface InputProps<
+export interface InputProps<
         Type extends "text"|"number" = "text",
         Icon extends IconDefinition | undefined=undefined,
         Label extends InputLabelProps<"label"|"placeholder">|undefined=undefined,
@@ -46,7 +46,7 @@ const Input=<Type extends "text"|"number" = "text",Icon extends IconDefinition |
             position: "absolute",
             top: "0.4rem", /* Adjust as needed */
             left: "0.75rem", /* Adjust as needed */
-            backgroundColor: "white",
+            //backgroundColor: "white",
             padding: "0px",
             fontSize: "0.9rem", /* Adjust as needed */
             lineHeight:"0.9rem",
@@ -93,22 +93,23 @@ const Input=<Type extends "text"|"number" = "text",Icon extends IconDefinition |
     };
     const getStyle= (key:CustomStyleKey<Icon,Label,LabelPlacement>,localStyleKey?:keyof typeof styles)=>{
           const resolvedKey = (localStyleKey ?? key) as keyof typeof styles & string;
-          // Check if the key exists in the styles and style objects
           const baseStyle = styles[resolvedKey] || {};
           const customStyle = style && key in style ? style[key as keyof typeof style] : {};
           return { ...baseStyle, ...customStyle };
     }
     const inputRef=useRef<HTMLInputElement>(null);
-    const [value,setValue]=useState<string>(startValue?startValue.toString():"");
+    const [value,setValue]=useState<string|null>(startValue?startValue.toString():null);
     const [labelUp,setLabelUp]=useState<boolean>(false);
 
     useEffect(()=>{
-        if(type=="number"){
-            const numericValue = value === '' ? NaN : Number(value);
-            onChange(numericValue as Type extends "number" ? number : string);
-        }
-        else{
-            onChange(value as Type extends "number" ? number : string);
+        if(value!=null&&value!=undefined){
+            if(type=="number"){
+                const numericValue = value === '' ? NaN : Number(value);
+                onChange(numericValue as Type extends "number" ? number : string);
+            }
+            else{
+                onChange(value as Type extends "number" ? number : string);
+            }
         }
     },[value]);
     useEffect(()=>{
@@ -118,7 +119,7 @@ const Input=<Type extends "text"|"number" = "text",Icon extends IconDefinition |
         else{
             setLabelUp(false);
         }
-        setValue(startValue?startValue.toString():"");
+        setValue(startValue?startValue.toString():null);
     },[startValue]);
     const HandleFocus=(e:React.FocusEvent<HTMLInputElement>)=>{
         if(onEmptyUseStartValue){
@@ -131,7 +132,7 @@ const Input=<Type extends "text"|"number" = "text",Icon extends IconDefinition |
         if(value.length<=0){
             if(onEmptyUseStartValue&&startValue!=undefined&&startValue!=null&&startValue?.toString().length>0){
                 setLabelUp(true);
-                setValue(startValue?startValue.toString():"");
+                setValue(startValue?startValue.toString():null);
             }
             else{
                 setLabelUp(false);
@@ -143,9 +144,14 @@ const Input=<Type extends "text"|"number" = "text",Icon extends IconDefinition |
             inputRef.current.focus();
         }
     }
-
+//v on change se taky bs neděje takže what the fuck
     return <div style={getStyle("wrapper")}>
-        <input ref={inputRef} value={value} name={name} placeholder={label&&label?.placement=="placeholder"?label?.text:undefined} onBlur={HandleBlur} onFocus={HandleFocus} disabled={disabled} style={{...getStyle("input"),...(label&&label?.placement=="label"?{paddingTop:(style as {labelGap?:string})?.labelGap??"1.4rem"}:{})}} onChange={(e)=>setValue(e.target.value)} type={type} {...rest} />
+        <input ref={inputRef} value={value??""} name={name} placeholder={label&&label?.placement=="placeholder"?label?.text:undefined} onBlur={HandleBlur} onFocus={HandleFocus} disabled={disabled} style={{...getStyle("input"),...(label&&label?.placement=="label"?{paddingTop:(style as {labelGap?:string})?.labelGap??"1.4rem"}:{})}} 
+            onChange={(e)=>{
+                if(((value!=null&&value!=undefined)||e.target.value.length>0)){
+                    setValue(e.target.value);
+                }
+                }} type={type} {...rest} />
         {label&&label?.placement=="label"
             ?<span onClick={labelClick} style={{...getStyle("label" as CustomStyleKey<Icon,Label,LabelPlacement>),...(!labelUp?getStyle("labelCentered" as CustomStyleKey<Icon,Label,LabelPlacement>):{})}}>{label.text}</span>
             :null

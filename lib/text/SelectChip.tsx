@@ -7,6 +7,7 @@ export type SelectChipStyle={
     wrapper?:CSSProperties,
     text?:CSSProperties,
     icon?:CSSProperties,
+    button?:CSSProperties,
 }
 
 interface SelectChipProps{
@@ -17,7 +18,7 @@ interface SelectChipProps{
     style?:SelectChipStyle
 }
 
-type CustomStyleKey="text"|"wrapper"|"icon";
+type CustomStyleKey="text"|"wrapper"|"icon"|"button";
 
 const styles:Style={
     wrapper:{
@@ -41,8 +42,18 @@ const styles:Style={
     },
     icon:{
         color:"red",
+        
+    },
+    button:{
         marginLeft:"0.5em",
         cursor:"pointer",
+        display:"inline-flex",
+        alignItems:"center",
+        justifyContent:"center",
+        lineHeight:0,
+        background:"transparent",
+        border:"none",
+        padding:"1px"
     }
 };
 
@@ -51,11 +62,18 @@ const SelectChip=({pattern,data,onRemove,icon,style}:SelectChipProps)=>{
     const getStyle=(key:CustomStyleKey,localStyleKey?:string)=>{
         return {...styles[localStyleKey ?? key],...(style?.[key]??null)}
     }
-    const OnKeyDown=(event:React.KeyboardEvent<SVGSVGElement>)=>{
-            if(event.key==="Enter"){
-                onRemove();
-            }
+    const OnKeyDown=(e:React.KeyboardEvent<HTMLButtonElement>)=>{
+        if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            // take focus away so we don’t hide it while it's still focused
+            e.currentTarget.blur();
+            onRemove();
+          }
         }
+    const handleRemoveClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+        e.currentTarget.blur();
+        onRemove();
+    };
     //this will handle the replacing 
     const replaceFields=(pattern:string)=>{
         const regex = /<field:([\w]+)>/g;
@@ -70,7 +88,9 @@ const SelectChip=({pattern,data,onRemove,icon,style}:SelectChipProps)=>{
     }
     return <div style={getStyle("wrapper")}>
         <span style={getStyle("text")}>{replaceFields(pattern)}</span>
-        <FontAwesomeIcon tabIndex={0} onKeyDown={OnKeyDown} icon={icon!=null?icon:faClose} data-chip-icon style={getStyle("icon")} onClick={(e)=>onRemove()} />
+        <button data-chip-icon style={getStyle("button")} tabIndex={0} onKeyDown={OnKeyDown} onClick={handleRemoveClick}>
+            <FontAwesomeIcon icon={icon!=null?icon:faClose} style={getStyle("icon")} />
+        </button>
     </div>
 };
 export default SelectChip;

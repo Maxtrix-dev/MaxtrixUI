@@ -4,6 +4,7 @@ export type SelectChipStyle = {
     wrapper?: CSSProperties;
     text?: CSSProperties;
     icon?: CSSProperties;
+    button?: CSSProperties;
 };
 interface SelectChipProps {
     pattern: string;

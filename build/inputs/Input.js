@@ -22,7 +22,7 @@ const Input = (_a) => {
             position: "absolute",
             top: "0.4rem",
             left: "0.75rem",
-            backgroundColor: "white",
+            //backgroundColor: "white",
             padding: "0px",
             fontSize: "0.9rem",
             lineHeight: "0.9rem",
@@ -69,21 +69,22 @@ const Input = (_a) => {
     };
     const getStyle = (key, localStyleKey) => {
         const resolvedKey = (localStyleKey !== null && localStyleKey !== void 0 ? localStyleKey : key);
-        // Check if the key exists in the styles and style objects
         const baseStyle = styles[resolvedKey] || {};
         const customStyle = style && key in style ? style[key] : {};
         return Object.assign(Object.assign({}, baseStyle), customStyle);
     };
     const inputRef = useRef(null);
-    const [value, setValue] = useState(startValue ? startValue.toString() : "");
+    const [value, setValue] = useState(startValue ? startValue.toString() : null);
     const [labelUp, setLabelUp] = useState(false);
     useEffect(() => {
-        if (type == "number") {
-            const numericValue = value === '' ? NaN : Number(value);
-            onChange(numericValue);
-        }
-        else {
-            onChange(value);
+        if (value != null && value != undefined) {
+            if (type == "number") {
+                const numericValue = value === '' ? NaN : Number(value);
+                onChange(numericValue);
+            }
+            else {
+                onChange(value);
+            }
         }
     }, [value]);
     useEffect(() => {
@@ -93,7 +94,7 @@ const Input = (_a) => {
         else {
             setLabelUp(false);
         }
-        setValue(startValue ? startValue.toString() : "");
+        setValue(startValue ? startValue.toString() : null);
     }, [startValue]);
     const HandleFocus = (e) => {
         if (onEmptyUseStartValue) {
@@ -106,7 +107,7 @@ const Input = (_a) => {
         if (value.length <= 0) {
             if (onEmptyUseStartValue && startValue != undefined && startValue != null && (startValue === null || startValue === void 0 ? void 0 : startValue.toString().length) > 0) {
                 setLabelUp(true);
-                setValue(startValue ? startValue.toString() : "");
+                setValue(startValue ? startValue.toString() : null);
             }
             else {
                 setLabelUp(false);
@@ -118,7 +119,12 @@ const Input = (_a) => {
             inputRef.current.focus();
         }
     };
-    return _jsxs("div", { style: getStyle("wrapper"), children: [_jsx("input", Object.assign({ ref: inputRef, value: value, name: name, placeholder: label && (label === null || label === void 0 ? void 0 : label.placement) == "placeholder" ? label === null || label === void 0 ? void 0 : label.text : undefined, onBlur: HandleBlur, onFocus: HandleFocus, disabled: disabled, style: Object.assign(Object.assign({}, getStyle("input")), (label && (label === null || label === void 0 ? void 0 : label.placement) == "label" ? { paddingTop: (_b = style === null || style === void 0 ? void 0 : style.labelGap) !== null && _b !== void 0 ? _b : "1.4rem" } : {})), onChange: (e) => setValue(e.target.value), type: type }, rest)), label && (label === null || label === void 0 ? void 0 : label.placement) == "label"
+    //v on change se taky bs neděje takže what the fuck
+    return _jsxs("div", { style: getStyle("wrapper"), children: [_jsx("input", Object.assign({ ref: inputRef, value: value !== null && value !== void 0 ? value : "", name: name, placeholder: label && (label === null || label === void 0 ? void 0 : label.placement) == "placeholder" ? label === null || label === void 0 ? void 0 : label.text : undefined, onBlur: HandleBlur, onFocus: HandleFocus, disabled: disabled, style: Object.assign(Object.assign({}, getStyle("input")), (label && (label === null || label === void 0 ? void 0 : label.placement) == "label" ? { paddingTop: (_b = style === null || style === void 0 ? void 0 : style.labelGap) !== null && _b !== void 0 ? _b : "1.4rem" } : {})), onChange: (e) => {
+                    if (((value != null && value != undefined) || e.target.value.length > 0)) {
+                        setValue(e.target.value);
+                    }
+                }, type: type }, rest)), label && (label === null || label === void 0 ? void 0 : label.placement) == "label"
                 ? _jsx("span", { onClick: labelClick, style: Object.assign(Object.assign({}, getStyle("label")), (!labelUp ? getStyle("labelCentered") : {})), children: label.text })
                 : null, icon != null
                 ? _jsx(FontAwesomeIcon, { icon: icon, style: getStyle("icon") })

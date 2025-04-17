@@ -2,7 +2,6 @@ import React, { CSSProperties, MouseEventHandler, useEffect, useRef, useState } 
 import Input, { InputLabelProps, InputStyle } from "./Input";
 import { IconDefinition } from "@fortawesome/fontawesome-svg-core";
 import SelectChip, { SelectChipStyle } from "../text/SelectChip";
-import Label from "../text/Label";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowDown, faArrowUp, faCaretDown, faCaretLeft, faCaretUp, faSearch } from "@fortawesome/free-solid-svg-icons";
 import DisabledOverlay, { DisabledOverlayStyle } from "../overlays/DisabledOverlay";
@@ -271,6 +270,7 @@ const Select=<T extends Record<string,any>,Searchable extends boolean = false,Se
 
 
     const removeChip=(index:number)=>{
+        wasChanged.current=true;
         setSelectedOptions((prevItems)=>prevItems.filter(item=>item!=index));
     }
     const replaceFields=(index:number,pattern:string)=>{
